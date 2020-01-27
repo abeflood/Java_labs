@@ -67,8 +67,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/search_toDate"
         android:layout_alignEnd="@+id/search_toDate"
-        android:layout_marginRight="55dp"
-        android:layout_marginEnd="55dp"
+        android:layout_marginRight="-105dp"
+        android:layout_marginEnd="-105dp"
         android:id="@+id/search_cancel"
         android:onClick="cancel" />
 
