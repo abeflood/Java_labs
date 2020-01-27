@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -76,25 +77,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick( View v) {
-        switch (v.getId()) {
-            case R.id.btnLeft:
-                --currentPhotoIndex;
-                break;
-            case R.id.btnRight:
-                ++currentPhotoIndex;
-                break;
-            default:
-                break;
-        }
-        if (currentPhotoIndex < 0)
-            currentPhotoIndex = 0;
-        if (currentPhotoIndex >= photoGallery.size())
-            currentPhotoIndex = photoGallery.size() - 1;
+        if (photoGallery.size() != 0) {
+            switch (v.getId()) {
+                case R.id.btnLeft:
+                    --currentPhotoIndex;
+                    break;
+                case R.id.btnRight:
+                    ++currentPhotoIndex;
+                    break;
+                default:
+                    break;
+            }
+            if (currentPhotoIndex < 0)
+                currentPhotoIndex = 0;
+            if (currentPhotoIndex >= photoGallery.size())
+                currentPhotoIndex = photoGallery.size() - 1;
 
-        currentPhotoPath = photoGallery.get(currentPhotoIndex);
-        Log.d("phpotoleft, size", Integer.toString(photoGallery.size()));
-        Log.d("photoleft, index", Integer.toString(currentPhotoIndex));
-        displayPhoto(currentPhotoPath);
+            currentPhotoPath = photoGallery.get(currentPhotoIndex);
+            Log.d("phpotoleft, size", Integer.toString(photoGallery.size()));
+            Log.d("photoleft, index", Integer.toString(currentPhotoIndex));
+            displayPhoto(currentPhotoPath);
+        }
     }
 
 
@@ -159,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentPhotoPath = image.getAbsolutePath();
         Log.d("createImageFile", currentPhotoPath);
         return image;
+
+        
     }
 
 }
