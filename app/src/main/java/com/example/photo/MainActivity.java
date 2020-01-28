@@ -89,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     photoGallery.add(f.getPath());
             }
         }
+        currentPhotoIndex = 0;
+        currentPhotoPath = photoGallery.get(currentPhotoIndex);
+        displayPhoto(currentPhotoPath);
+        String[] split_str = currentPhotoPath.split("_");
+        timestamp.setText(split_str[1]);
+        caption.setText(split_str[3]);
+        caption.invalidate();
+        timestamp.invalidate();
         return photoGallery;
     }
     private void displayPhoto(String path) {
