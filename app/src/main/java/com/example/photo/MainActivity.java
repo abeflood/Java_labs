@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery;
-
+    public Date minDate = new Date(Long.MIN_VALUE);
+    public Date maxDate = new Date(Long.MAX_VALUE);
     public TextView timestamp;
 
     public EditText caption;
@@ -50,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRight.setOnClickListener(this);
         btnFilter.setOnClickListener(filterListener);
 
-        Date minDate = new Date(Long.MIN_VALUE);
-        Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(minDate, maxDate);
+        //Date minDate = new Date(Long.MIN_VALUE);
+        //Date maxDate = new Date(Long.MAX_VALUE);
+        photoGallery = populateGallery(minDate, maxDate,"");
 
 
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
@@ -74,14 +76,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    private ArrayList<String> populateGallery(Date minDate, Date maxDate) {
+    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photo/files/Pictures");
         photoGallery = new ArrayList<String>();
         File[] fList = file.listFiles();
         if (fList != null) {
-            for (File f : file.listFiles()) {
-                photoGallery.add(f.getPath());
+            for (File f : fList) {
+                if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime()
+                            && f.lastModified() <= maxDate.getTime())
+                ) && (keywords == "" || f.getPath().contains(keywords)))
+                    photoGallery.add(f.getPath());
             }
         }
         return photoGallery;
@@ -98,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick( View v) {
 
-        Date minDate = new Date(Long.MIN_VALUE);
-        Date maxDate = new Date(Long.MAX_VALUE);
+        //Date minDate = new Date(Long.MIN_VALUE);
+        //Date maxDate = new Date(Long.MAX_VALUE);
         if (photoGallery.size() != 0 ) {
             switch (v.getId()) {
                 case R.id.btnCaption:
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String fin = split_str2[0]+"_"+split_str2[1]+"_"+split_str2[2]+"_"+caption.getText()+"_"+split_str2[4];
                     File destination =new File(fin);
                     source.renameTo(destination);
-                    photoGallery = populateGallery(minDate, maxDate);
+                    photoGallery = populateGallery(minDate, maxDate,"");
                     break;
                 case R.id.btnLeft:
                     --currentPhotoIndex;
@@ -152,26 +157,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Log.d("createImageFile", data.getStringExtra("STARTDATE"));
-                Log.d("createImageFile", data.getStringExtra("ENDDATE"));
+                DateFormat format = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
+                Date startTimestamp , endTimestamp;
+                try {
+                    String from = (String) data.getStringExtra("STARTTIMESTAMP");
+                    String to = (String) data.getStringExtra("ENDTIMESTAMP");
+                    startTimestamp = format.parse(from);
+                    endTimestamp = format.parse(to);
+                } catch (Exception ex) {
+                    startTimestamp = null;
+                    endTimestamp = null;
+                }
+                String keywords = (String) data.getStringExtra("KEYWORDS");
+                currentPhotoIndex = 0;
+                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords);
+                if (photoGallery.size() == 0) {
+                    displayPhoto(null);
+                } else {
+                    displayPhoto(photoGallery.get(currentPhotoIndex));
+                }
+            }
+        }
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            ImageView mImageView = (ImageView) findViewById(R.id.ivMain);
+            mImageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
+            photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+        }
 
-                photoGallery = populateGallery(new Date(), new Date());
-                Log.d("onCreate, size", Integer.toString(photoGallery.size()));
-                currentPhotoIndex = 0;
-                currentPhotoPath = photoGallery.get(currentPhotoIndex);
-                displayPhoto(currentPhotoPath);
-            }
-        }
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Log.d("createImageFile", "Picture Taken");
-                photoGallery = populateGallery(new Date(), new Date());
-                currentPhotoIndex = 0;
-                currentPhotoPath = photoGallery.get(currentPhotoIndex);
-                displayPhoto(currentPhotoPath);
-            }
-        }
-    }
+}
 
     public void takePicture(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
