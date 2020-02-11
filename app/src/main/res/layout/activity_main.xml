@@ -68,6 +68,19 @@
         android:layout_alignStart="@+id/btnLeft" />
 
     <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnLeft"
+        android:layout_alignLeft="@+id/btnLeft"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginBottom="23dp"
+        android:onClick="shareImage"
+        android:text="Share" />
+
+    <Button
         android:id="@+id/btnCaption"
         android:layout_width="59dp"
         android:layout_height="58dp"

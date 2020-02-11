@@ -309,4 +309,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
     }
+    public void shareImage(View v) {
+        Uri imagePath = Uri.parse(currentPhotoPath);
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        sharingIntent.setType("image/*");
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
+        startActivity(Intent.createChooser(sharingIntent, "Share Image Using"));
+    }
 }
