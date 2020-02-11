@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.btnCaption:
                     File source =new File(currentPhotoPath);
                     String[] split_str2 = currentPhotoPath.split("_");
-                    String fin = split_str2[0]+"_"+split_str2[1]+"_"+split_str2[2]+"_"+caption.getText()+"_"+split_str2[4];
+                    String fin = split_str2[0]+"_"+split_str2[1]+"_"+split_str2[2]+"_"+caption.getText()+"_"+split_str2[4]+"_"+split_str2[5]+"_"+split_str2[6];
                     File destination =new File(fin);
                     source.renameTo(destination);
                     photoGallery = populateGallery(minDate, maxDate,"");
