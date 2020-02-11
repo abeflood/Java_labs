@@ -1,7 +1,11 @@
 package com.example.photo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,11 +22,13 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
@@ -33,11 +39,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Date minDate = new Date(Long.MIN_VALUE);
     public Date maxDate = new Date(Long.MAX_VALUE);
     public TextView timestamp;
-
+    public LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
     public EditText caption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Acquire a reference to the system Location Manager
+
+        LocationListener locationListener = new  LocationListener() {
+             public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                makeUseOfNewLocation(location);
+            }
+            // Register the listener with the Location Manager to receive location updates
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -75,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
         }
     };
+
+
 
     private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
