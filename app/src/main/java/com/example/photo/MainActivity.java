@@ -1,7 +1,9 @@
 package com.example.photo;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,7 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,21 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Date minDate = new Date(Long.MIN_VALUE);
     public Date maxDate = new Date(Long.MAX_VALUE);
     public TextView timestamp;
-    public LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+    public FusedLocationProviderClient fusedLocationClient;
     public EditText caption;
+    public String slat;
+    public String slong;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Acquire a reference to the system Location Manager
-
-        LocationListener locationListener = new  LocationListener() {
-             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                makeUseOfNewLocation(location);
-            }
-            // Register the listener with the Location Manager to receive location updates
-        };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onResume() {
         super.onResume();
     }
+
 
     public void onClick( View v) {
 
@@ -213,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 }
 
     public void takePicture(View v) {
+
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -230,8 +234,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private File createImageFile() throws IOException {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            requestPermission();
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            int latitude = (int)location.getLatitude();
+                            int longitude = (int) location.getLongitude();
+                            slat = latitude+"";
+                            slong = longitude+"";
+                        }
+                    }
+                });
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_NoCaption_";
+        String imageFileName = "JPEG_" + timeStamp + "_NoCaption_" + slat + "_" + slong;
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", dir );
         currentPhotoPath = image.getAbsolutePath();
@@ -240,5 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+    }
 }
