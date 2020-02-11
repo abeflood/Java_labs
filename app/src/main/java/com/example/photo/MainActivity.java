@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView timestamp;
     public FusedLocationProviderClient fusedLocationClient;
     public EditText caption;
-    public String slat;
+    public String slat = "test";
     public String slong;
     public TextView lat_text;
     public TextView long_text;
@@ -56,8 +56,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            requestPermission();
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            int latitude = (int)location.getLatitude();
+                            int longitude = (int) location.getLongitude();
+                            slat = latitude+"";
+                            slong = longitude+"";
+                        }
+                    }
+                });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timestamp = (TextView) findViewById(R.id.TimeStamp);
