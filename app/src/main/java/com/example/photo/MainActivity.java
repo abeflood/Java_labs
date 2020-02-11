@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery;
+    public int min_long = -5000;
+    public int max_long = 5000;
+    public int min_lat = -5000;
+    public int max_lat = 5000;
     public Date minDate = new Date(Long.MIN_VALUE);
     public Date maxDate = new Date(Long.MAX_VALUE);
     public TextView timestamp;
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Date minDate = new Date(Long.MIN_VALUE);
         //Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(minDate, maxDate,"");
+        photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);
 
 
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
@@ -118,16 +122,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords) {
+    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords,
+                                              int longmin, int longmax, int latmin, int latmax) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photo/files/Pictures");
         photoGallery = new ArrayList<String>();
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
+                String[] split_str = f.getAbsolutePath().split("_");
                 if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime()
                             && f.lastModified() <= maxDate.getTime())
-                ) && (keywords == "" || f.getPath().contains(keywords)))
+                ) && (keywords == "" || f.getPath().contains(keywords)) &&
+                        (Integer.parseInt(split_str[4]) > latmin) && (Integer.parseInt(split_str[5]) < latmax)
+                        && (Integer.parseInt(split_str[4]) > longmin) && (Integer.parseInt(split_str[5]) < longmax))
                     photoGallery.add(f.getPath());
             }
         }
@@ -168,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String fin = split_str2[0]+"_"+split_str2[1]+"_"+split_str2[2]+"_"+caption.getText()+"_"+split_str2[4]+"_"+split_str2[5]+"_"+split_str2[6];
                     File destination =new File(fin);
                     source.renameTo(destination);
-                    photoGallery = populateGallery(minDate, maxDate,"");
+                    photoGallery = photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);;
                     break;
                 case R.id.btnLeft:
                     --currentPhotoIndex;
@@ -228,8 +236,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     endTimestamp = null;
                 }
                 String keywords = (String) data.getStringExtra("KEYWORDS");
+                int LongMin = Integer.parseInt(data.getStringExtra("LONGMIN"));
+                int LongMax =Integer.parseInt(data.getStringExtra("LONGMAX"));;
+                int LatMin =Integer.parseInt(data.getStringExtra("LATMIN"));;
+                int LatMax =Integer.parseInt(data.getStringExtra("LATMAX"));;
                 currentPhotoIndex = 0;
-                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords);
+                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords,LongMin,LongMax,LatMin,LatMax);
                 if (photoGallery.size() == 0) {
                     displayPhoto(null);
                 } else {
@@ -240,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.ivMain);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-            photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+            photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);
         }
 
 }
