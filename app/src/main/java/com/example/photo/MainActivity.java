@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public EditText caption;
     public String slat;
     public String slong;
+    public TextView lat_text;
+    public TextView long_text;
 
 
     @Override
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timestamp = (TextView) findViewById(R.id.TimeStamp);
+        lat_text = (TextView) findViewById(R.id.Lat_Text);
+        long_text = (TextView) findViewById(R.id.Long_Text);
         caption = findViewById(R.id.Caption);
         Button btnLeft = (Button)findViewById(R.id.btnLeft);
         Button btnCaption = (Button)findViewById(R.id.btnCaption);
@@ -109,13 +113,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         currentPhotoIndex = 0;
-        currentPhotoPath = photoGallery.get(currentPhotoIndex);
-        displayPhoto(currentPhotoPath);
-        String[] split_str = currentPhotoPath.split("_");
-        timestamp.setText(split_str[1]);
-        caption.setText(split_str[3]);
-        caption.invalidate();
-        timestamp.invalidate();
+        if (photoGallery.size() != 0) {
+            currentPhotoPath = photoGallery.get(currentPhotoIndex);
+            displayPhoto(currentPhotoPath);
+            String[] split_str = currentPhotoPath.split("_");
+            timestamp.setText(split_str[1]);
+            caption.setText(split_str[3]);
+            lat_text.setText(split_str[4]);
+            long_text.setText(split_str[5]);
+            caption.invalidate();
+            timestamp.invalidate();
+        }
         return photoGallery;
     }
     private void displayPhoto(String path) {
@@ -156,16 +164,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentPhotoIndex = 0;
             if (currentPhotoIndex >= photoGallery.size())
                 currentPhotoIndex = photoGallery.size() - 1;
-
-            currentPhotoPath = photoGallery.get(currentPhotoIndex);
-            String[] split_str = currentPhotoPath.split("_");
-            timestamp.setText(split_str[1]);
-            caption.setText(split_str[3]);
-            caption.invalidate();
-            timestamp.invalidate();
+            if (photoGallery.size() != 0) {
+                currentPhotoPath = photoGallery.get(currentPhotoIndex);
+                String[] split_str = currentPhotoPath.split("_");
+                timestamp.setText(split_str[1]);
+                caption.setText(split_str[3]);
+                lat_text.setText(split_str[4]);
+                long_text.setText(split_str[5]);
+                caption.invalidate();
+                timestamp.invalidate();
+            }
             Log.d("phpotoleft, size", Integer.toString(photoGallery.size()));
             Log.d("photoleft, index", Integer.toString(currentPhotoIndex));
             displayPhoto(currentPhotoPath);
+
         }
     }
 
@@ -254,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_NoCaption_" + slat + "_" + slong;
+        String imageFileName = "JPEG_" + timeStamp + "_NoCaption_" + slat + "_" + slong + "_";
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", dir );
         currentPhotoPath = image.getAbsolutePath();

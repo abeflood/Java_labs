@@ -95,6 +95,34 @@
         android:inputType="date"
         android:text="TimeStamp" />
 
+    <TextView
+        android:id="@+id/Lat_Text"
+        android:layout_width="118dp"
+        android:layout_height="42dp"
+
+        android:layout_alignBottom="@+id/ivMain"
+        android:layout_marginStart="182dp"
+        android:layout_marginEnd="-76dp"
+        android:layout_marginBottom="-122dp"
+        android:layout_toStartOf="@+id/btnRight"
+        android:layout_toEndOf="@+id/btnLeft"
+        android:inputType="date"
+        android:text="Latitude" />
+
+    <TextView
+        android:id="@+id/Long_Text"
+        android:layout_width="118dp"
+        android:layout_height="42dp"
+
+        android:layout_alignBottom="@+id/ivMain"
+        android:layout_marginStart="181dp"
+        android:layout_marginEnd="-75dp"
+        android:layout_marginBottom="-168dp"
+        android:layout_toStartOf="@+id/btnRight"
+        android:layout_toEndOf="@+id/btnLeft"
+        android:inputType="date"
+        android:text="Longitude" />
+
     <EditText
         android:id="@+id/Caption"
         android:layout_width="225dp"
