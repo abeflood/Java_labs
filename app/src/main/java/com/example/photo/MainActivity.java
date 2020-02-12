@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static final int CAMERA_REQUEST_CODE = 1;
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
-    private ArrayList<String> photoGallery;
+    public ArrayList<String> photoGallery;
     public int min_long = -5000;
     public int max_long = 5000;
     public int min_lat = -5000;
@@ -131,11 +131,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (fList != null) {
             for (File f : fList) {
                 String[] split_str = f.getAbsolutePath().split("_");
+                int plong = Integer.parseInt(split_str[5]);
+                int plat = Integer.parseInt(split_str[4]);
                 if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime()
                             && f.lastModified() <= maxDate.getTime())
                 ) && (keywords == "" || f.getPath().contains(keywords)) &&
-                        (Integer.parseInt(split_str[4]) > latmin) && (Integer.parseInt(split_str[5]) < latmax)
-                        && (Integer.parseInt(split_str[4]) > longmin) && (Integer.parseInt(split_str[5]) < longmax))
+                        (plat > latmin) && (plat < latmax)
+                        && (plong > longmin) && (plong < longmax))
                     photoGallery.add(f.getPath());
             }
         }
