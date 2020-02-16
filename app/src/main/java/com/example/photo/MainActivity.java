@@ -127,17 +127,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photo/files/Pictures");
         photoGallery = new ArrayList<String>();
+        File ret;
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
-                String[] split_str = f.getAbsolutePath().split("_");
-                int plong = Integer.parseInt(split_str[5]);
-                int plat = Integer.parseInt(split_str[4]);
-                if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime()
-                            && f.lastModified() <= maxDate.getTime())
-                ) && (keywords == "" || f.getPath().contains(keywords)) &&
-                        (plat > latmin) && (plat < latmax)
-                        && (plong > longmin) && (plong < longmax))
+                ret = fileChecker.checkFile(f, minDate,  maxDate, keywords,
+                                        longmin,  longmax,  latmin,  latmax);
+                if (ret != null)
                     photoGallery.add(f.getPath());
             }
         }
