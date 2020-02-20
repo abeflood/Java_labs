@@ -13,8 +13,8 @@ public class fileChecker {
         if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime()
                 && f.lastModified() <= maxDate.getTime())
         ) && (keywords == "" || f.getPath().contains(keywords)) &&
-                (plat > latmin) && (plat < latmax)
-                && (plong > longmin) && (plong < longmax))
+                (plat >= latmin) && (plat <= latmax)
+                && (plong >= longmin) && (plong <= longmax))
             ret = f;
         else
             ret = null;

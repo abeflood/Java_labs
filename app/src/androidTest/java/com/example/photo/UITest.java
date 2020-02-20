@@ -67,10 +67,10 @@ public class UITest {
         onView(withId(R.id.etFromDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etToDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etKeywords)).perform(typeText(""), closeSoftKeyboard());
-        onView(withId(R.id.etLongMin)).perform(typeText("-140"), closeSoftKeyboard());
-        onView(withId(R.id.etLongMax)).perform(typeText("125"), closeSoftKeyboard());
-        onView(withId(R.id.etLatMin)).perform(typeText("-141"), closeSoftKeyboard());
-        onView(withId(R.id.etLatMax)).perform(typeText("125"), closeSoftKeyboard());
+        onView(withId(R.id.etLongMin)).perform(typeText("-200"), closeSoftKeyboard());
+        onView(withId(R.id.etLongMax)).perform(typeText("200"), closeSoftKeyboard());
+        onView(withId(R.id.etLatMin)).perform(typeText("-200"), closeSoftKeyboard());
+        onView(withId(R.id.etLatMax)).perform(typeText("200"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
         onView(withId(R.id.btnRight)).perform(click());
         onView(withId(R.id.btnRight)).perform(click());

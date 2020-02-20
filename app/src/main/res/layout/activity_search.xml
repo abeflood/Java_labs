@@ -25,11 +25,18 @@
         android:layout_alignBaseline="@+id/tvToDateTime" android:layout_alignParentEnd="true"
         android:layout_marginEnd="31dp" android:ems="10"
         android:textSize="24sp" />
+
     <TextView
-        android:id="@+id/tvKeywords" android:text="Keywords: "
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tvFromDateTime" android:layout_centerVertical="true"
+        android:id="@+id/tvKeywords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvLongMax"
+        android:layout_alignStart="@+id/tvFromDateTime"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="112dp"
+        android:text="Keywords: "
         android:textSize="24sp" />
+
     <EditText
         android:id="@+id/etKeywords" android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_alignStart="@+id/go"
