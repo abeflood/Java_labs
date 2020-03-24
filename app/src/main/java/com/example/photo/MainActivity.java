@@ -4,13 +4,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -27,20 +30,27 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 
-
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
     static final int CAMERA_REQUEST_CODE = 1;
-    private String currentPhotoPath = null;
+    public String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     public ArrayList<String> photoGallery;
     public int min_long = -5000;
@@ -56,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String slong;
     public TextView lat_text;
     public TextView long_text;
-
+    public DownloadWebPageTask task = new DownloadWebPageTask();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             requestPermission();
         }
@@ -74,23 +84,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            int latitude = (int)location.getLatitude();
+                            int latitude = (int) location.getLatitude();
                             int longitude = (int) location.getLongitude();
-                            slat = latitude+"";
-                            slong = longitude+"";
+                            slat = latitude + "";
+                            slong = longitude + "";
                         }
                     }
                 });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        https:
+//www.w3schools.com/html/html_images.asp
         timestamp = (TextView) findViewById(R.id.TimeStamp);
         lat_text = (TextView) findViewById(R.id.Lat_Text);
         long_text = (TextView) findViewById(R.id.Long_Text);
         caption = findViewById(R.id.Caption);
-        Button btnLeft = (Button)findViewById(R.id.btnLeft);
-        Button btnCaption = (Button)findViewById(R.id.btnCaption);
-        Button btnRight = (Button)findViewById(R.id.btnRight);
-        Button btnFilter = (Button)findViewById(R.id.btnFilter);
+        Button btnLeft = (Button) findViewById(R.id.btnLeft);
+        Button btnCaption = (Button) findViewById(R.id.btnCaption);
+        Button btnRight = (Button) findViewById(R.id.btnRight);
+        Button btnFilter = (Button) findViewById(R.id.btnFilter);
         btnLeft.setOnClickListener(this);
         btnCaption.setOnClickListener(this);
         btnRight.setOnClickListener(this);
@@ -98,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Date minDate = new Date(Long.MIN_VALUE);
         //Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);
+        photoGallery = populateGallery(minDate, maxDate, "", min_long, max_long, min_lat, max_lat);
 
 
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
@@ -113,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             displayPhoto(currentPhotoPath);
         }
     }
+
     private View.OnClickListener filterListener = new View.OnClickListener() {
         public void onClick(View v) {
             Intent i = new Intent(MainActivity.this, SearchActivity.class);
@@ -121,8 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
-
-    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords,
+    private ArrayList<String> populateGallery(Date minDate, Date maxDate, String keywords,
                                               int longmin, int longmax, int latmin, int latmax) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photo/files/Pictures");
@@ -131,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
-                ret = fileChecker.checkFile(f, minDate,  maxDate, keywords,
-                                        longmin,  longmax,  latmin,  latmax);
+                ret = fileChecker.checkFile(f, minDate, maxDate, keywords,
+                        longmin, longmax, latmin, latmax);
                 if (ret != null)
                     photoGallery.add(f.getPath());
             }
@@ -151,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return photoGallery;
     }
+
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.ivMain);
         iv.setImageBitmap(BitmapFactory.decodeFile(path));
@@ -162,19 +176,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void onClick( View v) {
+    public void onClick(View v) {
 
         //Date minDate = new Date(Long.MIN_VALUE);
         //Date maxDate = new Date(Long.MAX_VALUE);
-        if (photoGallery.size() != 0 ) {
+        if (photoGallery.size() != 0) {
             switch (v.getId()) {
+                case R.id.btnUpload:
+                    task.execute(new String[] { "http://142.232.61.32:8080/midp/put/" });
                 case R.id.btnCaption:
-                    File source =new File(currentPhotoPath);
+                    File source = new File(currentPhotoPath);
                     String[] split_str2 = currentPhotoPath.split("_");
-                    String fin = split_str2[0]+"_"+split_str2[1]+"_"+split_str2[2]+"_"+caption.getText()+"_"+split_str2[4]+"_"+split_str2[5]+"_"+split_str2[6];
-                    File destination =new File(fin);
+                    String fin = split_str2[0] + "_" + split_str2[1] + "_" + split_str2[2] + "_" + caption.getText() + "_" + split_str2[4] + "_" + split_str2[5] + "_" + split_str2[6];
+                    File destination = new File(fin);
                     source.renameTo(destination);
-                    photoGallery = photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);;
+                    photoGallery = photoGallery = populateGallery(minDate, maxDate, "", min_long, max_long, min_lat, max_lat);
+
                     break;
                 case R.id.btnLeft:
                     --currentPhotoIndex;
@@ -207,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-//    public void goToSettings(View v) {
+    //    public void goToSettings(View v) {
 //        Intent i = new Intent(this, SettingsActivity.class);
 //        startActivity(i);
 //    }
@@ -223,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 DateFormat format = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
-                Date startTimestamp , endTimestamp;
+                Date startTimestamp, endTimestamp;
                 try {
                     String from = (String) data.getStringExtra("STARTTIMESTAMP");
                     String to = (String) data.getStringExtra("ENDTIMESTAMP");
@@ -235,11 +252,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 String keywords = (String) data.getStringExtra("KEYWORDS");
                 int LongMin = Integer.parseInt(data.getStringExtra("LONGMIN"));
-                int LongMax =Integer.parseInt(data.getStringExtra("LONGMAX"));;
-                int LatMin =Integer.parseInt(data.getStringExtra("LATMIN"));;
-                int LatMax =Integer.parseInt(data.getStringExtra("LATMAX"));;
+                int LongMax = Integer.parseInt(data.getStringExtra("LONGMAX"));
+                ;
+                int LatMin = Integer.parseInt(data.getStringExtra("LATMIN"));
+                ;
+                int LatMax = Integer.parseInt(data.getStringExtra("LATMAX"));
+                ;
                 currentPhotoIndex = 0;
-                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords,LongMin,LongMax,LatMin,LatMax);
+                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, LongMin, LongMax, LatMin, LatMax);
                 if (photoGallery.size() == 0) {
                     displayPhoto(null);
                 } else {
@@ -250,10 +270,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.ivMain);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-            photoGallery = populateGallery(minDate, maxDate,"",min_long,max_long,min_lat,max_lat);
+            photoGallery = populateGallery(minDate, maxDate, "", min_long, max_long, min_lat, max_lat);
         }
 
-}
+    }
 
     public void takePicture(View v) {
 
@@ -275,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private File createImageFile() throws IOException {
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             requestPermission();
         }
@@ -287,26 +307,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            int latitude = (int)location.getLatitude();
+                            int latitude = (int) location.getLatitude();
                             int longitude = (int) location.getLongitude();
-                            slat = latitude+"";
-                            slong = longitude+"";
+                            slat = latitude + "";
+                            slong = longitude + "";
                         }
                     }
                 });
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_NoCaption_" + slat + "_" + slong + "_";
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", dir );
+        File image = File.createTempFile(imageFileName, ".jpg", dir);
         currentPhotoPath = image.getAbsolutePath();
         Log.d("createImageFile", currentPhotoPath);
         return image;
 
 
     }
-    private void requestPermission(){
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
+
     public void shareImage(View v) {
         Uri imagePath = Uri.parse(currentPhotoPath);
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -314,5 +336,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sharingIntent.setType("image/*");
         sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath);
         startActivity(Intent.createChooser(sharingIntent, "Share Image Using"));
+    }
+    private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection c = (HttpURLConnection) url.openConnection();
+                c.setDoInput(true);
+                c.setRequestMethod("POST");
+                c.setDoOutput(true);
+                c.connect();
+                OutputStream output = c.getOutputStream();
+                Bitmap im = BitmapFactory.decodeFile(currentPhotoPath);
+                im.compress(Bitmap.CompressFormat.JPEG, 50, output);
+                output.close();
+                Scanner result = new Scanner(c.getInputStream());
+                String response = result.nextLine();
+                Log.e("ImageUploader", "Error uploading image: " + response);
+                result.close();
+            } catch (IOException e) {
+                Log.e("ImageUploader", "Error uploading image", e);
+            }
+            return "YOLO";
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            int i = 0; //Do nothing
+        }
     }
 }
