@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -26,7 +27,7 @@ android {
 dependencies {
     // Core library
     androidTestImplementation 'androidx.test:core:1.0.0'
-
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.0'
@@ -40,4 +41,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
    // implementation 'com.google.android.gms::play-services:11.0.1'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+    compile('org.apache.httpcomponents:httpmime:4.3') {
+        exclude module: "httpclient"
+    }
 }

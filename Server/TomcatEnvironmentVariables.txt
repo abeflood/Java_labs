@@ -1,0 +1,44 @@
+1.  Copy the folder tomcat from shareout\comp\7855 to C directory of your lab computer
+
+2.  In the file c:\tomcat\conf\server.xml replace 
+<Server port="8005" shutdown="SHUTDOWN"> with <Server port="8005" shutdown="SHUTDOWN">, and 
+<Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" /> with
+<Connector port="8081" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" />.
+
+3.  set the following environment variables
+CATALINA_HOME C:\tomcat
+JRE_HOME C:\Apps\Java\jre-11.0.4.11-hotspot
+JAVA_HOME C:\Apps\Java\jdk-11.0.4.11-hotspot
+also add C:\Apps\Java\jdk-11.0.4.11-hotspot\binto the Path system variable
+
+To set environment variables, click on windows icon on the bottom left of your desktop. 
+Expand "Windows System" folder that appears towards the bottom of the program list.  
+From "Control Panel" select System -> Advanced system settings -> Environment Variables.
+Click on "New..." button for System variables.  
+Add the above top 3 system variables one by one if any one of them does not exist already.  
+JAVA_HOME is probably already there but JRE_HOME and CATALINA_HOME would need to be added. 
+Click on the Path in the System variables and then click on "New".  
+Add C:\Apps\Java\jdk-11.0.4.11-hotspot\bin to the list.
+
+4.  copy the folder midp from the comp7855 share out into C:\tomcat\webapps
+
+5. start a windows command prompt from "Windows System" (where you found Control Panel previously)
+go to c:\tomcat\bin and then type startup.bat
+Allow network connection if such permissions window show up.
+If everything was configured properly a new command window will be launched that will display log messages,
+ none of which will be an error or a warning.
+
+6.  Open Internet Explorer and type http://localhost:8081
+You should see a tomcat manager web page.  
+
+type http://localhost:8081/midp/hits and you should see the following on the web page.
+Hits: 1
+refreshing the page will increment the count.
+
+You have basically configured apache tomcat and deployed a simple web app that counts number of hits.
+Check out C:\tomcat\webapps\midp\WEB-INF\web.xml and C:\tomcat\webapps\midp\WEB-INF\classes\HitServlet.java files.
+
+Although HitServlet.class file already exists.  You can compile the java file to create the class file as follows:
+on a windows command prompt type the following
+cd C:\tomcat\webapps\midp\WEB-INF\classes
+javac -classpath .;c:\tomcat\lib\servlet-api.jar HitServlet.java

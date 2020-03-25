@@ -1,0 +1,102 @@
+25-Feb-2020 14:02:49.275 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.24
+25-Feb-2020 14:02:49.281 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Aug 14 2019 21:16:42 UTC
+25-Feb-2020 14:02:49.281 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.24.0
+25-Feb-2020 14:02:49.282 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+25-Feb-2020 14:02:49.282 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+25-Feb-2020 14:02:49.283 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+25-Feb-2020 14:02:49.283 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-13.0.1
+25-Feb-2020 14:02:49.283 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           13.0.1+9
+25-Feb-2020 14:02:49.284 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+25-Feb-2020 14:02:49.284 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 14:02:49.285 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 14:02:49.365 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Feb-2020 14:02:49.366 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+25-Feb-2020 14:02:49.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Feb-2020 14:02:49.368 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\conf\logging.properties
+25-Feb-2020 14:02:49.368 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Feb-2020 14:02:49.369 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+25-Feb-2020 14:02:49.370 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Feb-2020 14:02:49.370 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+25-Feb-2020 14:02:49.371 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 14:02:49.371 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 14:02:49.372 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\temp
+25-Feb-2020 14:02:49.373 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.23] using APR version [1.7.0].
+25-Feb-2020 14:02:49.374 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+25-Feb-2020 14:02:49.374 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+25-Feb-2020 14:02:49.381 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1c  28 May 2019]
+25-Feb-2020 14:02:49.768 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 14:02:50.218 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 14:02:50.222 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1,281] milliseconds
+25-Feb-2020 14:02:50.293 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+25-Feb-2020 14:02:50.294 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.24]
+25-Feb-2020 14:02:50.311 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\docs]
+25-Feb-2020 14:02:50.958 WARNING [main] org.apache.catalina.util.SessionIdGeneratorBase.createSecureRandom Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [227] milliseconds.
+25-Feb-2020 14:02:50.991 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\docs] has finished in [680] ms
+25-Feb-2020 14:02:50.992 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\examples]
+25-Feb-2020 14:02:51.805 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\examples] has finished in [813] ms
+25-Feb-2020 14:02:51.811 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\host-manager]
+25-Feb-2020 14:02:51.920 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\host-manager] has finished in [109] ms
+25-Feb-2020 14:02:51.923 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\manager]
+25-Feb-2020 14:02:51.993 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\manager] has finished in [69] ms
+25-Feb-2020 14:02:51.996 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\ROOT]
+25-Feb-2020 14:02:52.060 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\ROOT] has finished in [64] ms
+25-Feb-2020 14:02:52.070 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 14:02:52.132 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 14:02:52.138 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1,914] milliseconds
+25-Feb-2020 14:23:53.394 INFO [Catalina-utility-2] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\midp]
+25-Feb-2020 14:23:53.555 INFO [Catalina-utility-2] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\midp] has finished in [164] ms
+25-Feb-2020 14:27:09.090 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+25-Feb-2020 14:27:09.091 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 14:27:09.220 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 14:27:09.350 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+25-Feb-2020 14:27:09.396 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 14:27:09.399 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 14:27:09.403 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 14:27:09.404 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 15:07:24.817 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.24
+25-Feb-2020 15:07:24.822 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Aug 14 2019 21:16:42 UTC
+25-Feb-2020 15:07:24.823 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.24.0
+25-Feb-2020 15:07:24.824 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+25-Feb-2020 15:07:24.824 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+25-Feb-2020 15:07:24.824 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+25-Feb-2020 15:07:24.825 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-13.0.1
+25-Feb-2020 15:07:24.826 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           13.0.1+9
+25-Feb-2020 15:07:24.826 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+25-Feb-2020 15:07:24.827 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 15:07:24.827 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 15:07:24.843 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Feb-2020 15:07:24.843 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+25-Feb-2020 15:07:24.844 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Feb-2020 15:07:24.845 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\conf\logging.properties
+25-Feb-2020 15:07:24.846 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Feb-2020 15:07:24.846 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+25-Feb-2020 15:07:24.847 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Feb-2020 15:07:24.847 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+25-Feb-2020 15:07:24.848 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 15:07:24.848 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat
+25-Feb-2020 15:07:24.849 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\temp
+25-Feb-2020 15:07:24.849 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.23] using APR version [1.7.0].
+25-Feb-2020 15:07:24.850 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+25-Feb-2020 15:07:24.851 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+25-Feb-2020 15:07:24.858 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1c  28 May 2019]
+25-Feb-2020 15:07:25.201 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 15:07:25.549 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 15:07:25.558 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [968] milliseconds
+25-Feb-2020 15:07:25.639 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+25-Feb-2020 15:07:25.640 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.24]
+25-Feb-2020 15:07:25.650 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\docs]
+25-Feb-2020 15:07:26.100 WARNING [main] org.apache.catalina.util.SessionIdGeneratorBase.createSecureRandom Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [137] milliseconds.
+25-Feb-2020 15:07:26.130 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\docs] has finished in [480] ms
+25-Feb-2020 15:07:26.131 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\examples]
+25-Feb-2020 15:07:27.498 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\examples] has finished in [1,367] ms
+25-Feb-2020 15:07:27.504 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\host-manager]
+25-Feb-2020 15:07:27.622 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\host-manager] has finished in [117] ms
+25-Feb-2020 15:07:27.624 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\manager]
+25-Feb-2020 15:07:27.700 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\manager] has finished in [75] ms
+25-Feb-2020 15:07:27.701 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\midp]
+25-Feb-2020 15:07:27.778 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\midp] has finished in [77] ms
+25-Feb-2020 15:07:27.779 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\ROOT]
+25-Feb-2020 15:07:27.814 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\abefl\Documents\University\BCIT\Semester 9 - Winter 2020\Comp 7855\ShareOut\tomcat\webapps\ROOT] has finished in [35] ms
+25-Feb-2020 15:07:27.820 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8081"]
+25-Feb-2020 15:07:27.833 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+25-Feb-2020 15:07:27.840 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2,278] milliseconds

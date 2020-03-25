@@ -1,6 +1,8 @@
 package com.example.photo;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,9 +46,29 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Scanner;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
@@ -183,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (photoGallery.size() != 0) {
             switch (v.getId()) {
                 case R.id.btnUpload:
-                    task.execute(new String[] { "http://142.232.61.32:8080/midp/put/" });
+                    task.execute(new String[] { "http://localhost:9091/PhotoServer/sends" });
                 case R.id.btnCaption:
                     File source = new File(currentPhotoPath);
                     String[] split_str2 = currentPhotoPath.split("_");
@@ -338,32 +361,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(Intent.createChooser(sharingIntent, "Share Image Using"));
     }
     private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
+
         @Override
         protected String doInBackground(String... urls) {
-
+                Bitmap bm = BitmapFactory.decodeFile(currentPhotoPath);
             try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection c = (HttpURLConnection) url.openConnection();
-                c.setDoInput(true);
-                c.setRequestMethod("POST");
-                c.setDoOutput(true);
-                c.connect();
-                OutputStream output = c.getOutputStream();
-                Bitmap im = BitmapFactory.decodeFile(currentPhotoPath);
-                im.compress(Bitmap.CompressFormat.JPEG, 50, output);
-                output.close();
-                Scanner result = new Scanner(c.getInputStream());
-                String response = result.nextLine();
-                Log.e("ImageUploader", "Error uploading image: " + response);
-                result.close();
-            } catch (IOException e) {
-                Log.e("ImageUploader", "Error uploading image", e);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 75, bos);
+                byte[] data = bos.toByteArray();
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost postRequest = new HttpPost(urls[0]);
+                ByteArrayBody bab = new ByteArrayBody(data, "forest.jpg");
+                // File file= new File("/mnt/sdcard/forest.png");
+                // FileBody bin = new FileBody(file);
+                MultipartEntity reqEntity = new MultipartEntity(
+                        HttpMultipartMode.BROWSER_COMPATIBLE);
+                reqEntity.addPart("uploaded", bab);
+                reqEntity.addPart("photoCaption", new StringBody("sfsdfsdf"));
+                postRequest.setEntity(reqEntity);
+                HttpResponse response = httpClient.execute(postRequest);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        response.getEntity().getContent(), "UTF-8"));
+                String sResponse;
+                StringBuilder s = new StringBuilder();
+
+                while ((sResponse = reader.readLine()) != null) {
+                    s = s.append(sResponse);
+                }
+                System.out.println("Response: " + s);
+            } catch (Exception e) {
+                // handle exception here
+                Log.e(e.getClass().getName(), e.getMessage());
             }
-            return "YOLO";
+            return "Success";
+
         }
-        @Override
+
         protected void onPostExecute(String result) {
-            int i = 0; //Do nothing
+            super.onPostExecute(result);
+
         }
     }
 }
